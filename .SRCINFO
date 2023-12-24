@@ -12,7 +12,9 @@ pkgbase = python-cairo-git
 	depends = python
 	depends = cairo>=1.12
 	provides = python-cairo=1.20.0
+	provides = pycairo=1.20.0
 	conflicts = python-cairo
+	conflicts = pycairo
 	options = !libtool
 	source = python-cairo-git::git+https://github.com/pygobject/pycairo
 	sha256sums = SKIP
