@@ -40,7 +40,7 @@ conflicts=(
   "${_pkgname}"
   "${_Pkg}")
 source=(
-  "${pkgname}::git+${_url}")
+  "${_pkgname}::git+${_url}")
 sha256sums=(
   'SKIP')
  
@@ -58,7 +58,21 @@ pkgver() {
 }
  
 package() {
-    cd "${srcdir}/${_pkgname}"
+  cd \
+    "${srcdir}/${_pkgname}"
+  local \
+    _cflags=()
+  _cflags=(
+    "-I$( \
+       dirname \
+         "$(cc \
+              -v 2>&1 |
+              grep \
+                "InstalledDir" | \
+                awk '{print $2}')")/include/cairo"
+    "${CFLAGS}"
+  )
+  CFLAGS="${_cflags[*]}" \
     "${_py}" \
       setup.py \
       install \
